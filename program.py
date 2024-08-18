@@ -1,7 +1,7 @@
 import os
 
 # Define a function to format and clean a drive
-def tree_format(drive):
+def tree_format(drive,sizes):
     # Walk through the directory tree starting from the specified drive
     for folder_name, subfolders, filenames in os.walk(drive):
         # Calculate the depth of the current folder in the directory tree
@@ -17,7 +17,7 @@ def tree_format(drive):
             # Calculate the file size in megabytes
             size = os.path.getsize(file_path) / 1024 ** 2
             # Check if the file is larger than 100MB
-            if size >= 100:
+            if size >= sizes:
                 # Print the file name and size, and prompt for deletion
                 print(f"{indent} {filename} size (in MB): {size:.2f}")
                 deleting_file(file_path)  # Call the deleting_file function
@@ -44,10 +44,10 @@ def deleting_file(path):
 
 # Prompt the user to enter the drive to be cleaned
 drive = input("Enter the drive to be cleaned:")
-
+size=int(input("Enter the size:"))
 # Check if the specified root directory exists
 if os.path.exists(drive):
     # Call the tree_format function to clean the drive
-    tree_format(drive)
+    tree_format(drive,size)
 else:
     print(f"The specified root directory '{drive}' does not exist.")
